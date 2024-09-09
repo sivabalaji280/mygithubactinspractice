@@ -19,7 +19,7 @@ jobs:
         id: env
         run: |
           BRANCH=${GITHUB_REF#refs/heads/}
-          if [ "${{github.event_name}} == "push"]; then
+          if [ "${{github.event_name}}" == "push"]; then
             
             if [ "${BRANCH}" == "dev"]; then
             echo "ENVIRONMENT=dev" >> $GITHUB_ENV
