@@ -17,10 +17,13 @@ jobs:
     steps:
       - name: Determine environment
         id: env
-        run: echo "ENVIRONMENT=${{ github.base_ref }}" >> $GITHUB_ENV
+        run: |
+          echo "ENVIRONMENT1=${{ github.base_ref }}" >> $GITHUB_ENV
+          echo "ENVIRONMENT2=${{ github.ref }}" >> $GITHUB_ENV
 
       - name: showing the value
         run:
-          echo "the value is $ENVIRONMENT"
+          echo "the value is $ENVIRONMENT1"
+          echo "the value is $ENVIRONMENT2"
 
       
