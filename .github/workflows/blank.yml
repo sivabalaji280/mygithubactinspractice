@@ -5,6 +5,7 @@ on:
   push:
     branches:
     - dev
+    - main
   pull_request:
     branches:
     - release
@@ -17,7 +18,7 @@ jobs:
     steps:
       - name: Determine environment
         id: env
-        run: echo "ENVIRONMENT=${{ github.ref }}" 
+        run: echo "ENVIRONMENT=${{ github.ref }}" >> $GITHUB_ENV
 
       - name: showing the value
         run:
