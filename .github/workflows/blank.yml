@@ -1,11 +1,25 @@
 name: Myfirst workflow 
 
-on: workflow_dispatch
+on: 
+  push:
+    branches:
+    - dev
+  pull_request:
+    branches:
+    - release
+    - main
 
 jobs:
   myfirst_job:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print greeting
-        run: echo "Hello there"
+      - name: Determine environment
+        id: env
+        run: echo "ENVIRONMENT=${{ github.ref }}" >> $GITHUB_ENV
+
+      - name: showing the value
+        run:
+          echo "the value is $ENVIRONMENT"
+
+      
