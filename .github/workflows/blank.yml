@@ -18,12 +18,22 @@ jobs:
       - name: Determine environment
         id: env
         run: |
-          echo "ENVIRONMENT1=${{ github.base_ref }}" >> $GITHUB_ENV
-          echo "ENVIRONMENT2=${{ github.ref }}" >> $GITHUB_ENV
+          BRANCH=${GITHUB_REF#refs/heads/}
+          if [ "${{github.event_name}} == "push"]; then
+            
+            if [ "${BRANCH}" == "dev"]; then
+            echo "ENVIRONMENT=dev" >> $GITHUB_ENV
+          elif [ "${{github.event_name}} == "pull_request" ]; then
+             if [ "${{ github.base_ref }}" == "release"  ]; then
+               echo "ENVIRONMENT=release" >> $GITHUB_ENV 
+             elif [ "${{ github.base_ref }}" == "main"  ] ; then
+                echo "ENVIRONMENT=release" >> $GITHUB_ENV           
+
+
 
       - name: showing the value
         run:
-          echo "the value is $ENVIRONMENT1"
-          echo "the value is $ENVIRONMENT2"
+          echo "the value is $ENVIRONMENT"
+          # echo "the value is $ENVIRONMENT2"
 
       
