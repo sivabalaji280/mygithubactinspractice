@@ -5,7 +5,6 @@ on:
   push:
     branches:
     - dev
-    - main
   pull_request:
     branches:
     - release
@@ -18,10 +17,25 @@ jobs:
     steps:
       - name: Determine environment
         id: env
-        run: echo "ENVIRONMENT=${{ github.ref }}" >> $GITHUB_ENV
+        run: |
+          BRANCH=${GITHUB_REF#refs/heads/}
+
+            if [ "${{ github.event_name}}" == "push" ]; then
+              if [ "${BRANCH}" == "dev" ]; then
+                echo "ENVIRONMENT=dev" >> $GITHUB_ENV
+              fi
+            elif [ "${{ github.event_name}}" == "pull_request" ]; then
+              if [ "${{ github.base_ref}}" == "release" ]; then
+                echo "ENVIRONMENT=release" >> $GITHUB_ENV
+              elif [ "${{ github.base_ref}}" == "main" ]; then
+                echo "ENVIRONMENT=main" >> $GITHUB_ENV
+              fi
+            fi
+
 
       - name: showing the value
         run:
           echo "the value is $ENVIRONMENT"
+          # echo "the value is $ENVIRONMENT2"
 
       
