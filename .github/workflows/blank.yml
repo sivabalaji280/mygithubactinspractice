@@ -20,15 +20,15 @@ jobs:
         run: |
           BRANCH=${GITHUB_REF#refs/heads/}
 
-            if [ "${GITHUB_EVENT_NAME}" == "push" ]; then
+            if [ "${{ github.event_name}}" == "push" ]; then
               if [ "${BRANCH}" == "dev" ]; then
                 echo "ENVIRONMENT=dev" >> $GITHUB_ENV
               fi
-            elif [ "${GITHUB_EVENT_NAME}" == "pull_request" ]; then
-              if [ "${BRANCH}" == "release" ]; then
+            elif [ "${{ github.event_name}}" == "pull_request" ]; then
+              if [ "${{ github.base_ref}}" == "release" ]; then
                 echo "ENVIRONMENT=release" >> $GITHUB_ENV
-              elif [ "${BRANCH}" == "main" ]; then
-                echo "ENVIRONMENT=release" >> $GITHUB_ENV
+              elif [ "${{ github.base_ref}}" == "main" ]; then
+                echo "ENVIRONMENT=main" >> $GITHUB_ENV
               fi
             fi
 
