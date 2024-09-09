@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Determine environment
         id: env
-        run: echo "ENVIRONMENT=${{ github.ref }}" >> $GITHUB_ENV
+        run: echo "ENVIRONMENT=${{ github.base_ref }}" >> $GITHUB_ENV
 
       - name: showing the value
         run:
