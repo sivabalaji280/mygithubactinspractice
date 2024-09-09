@@ -18,9 +18,9 @@ jobs:
       - name: Determine environment
         id: env
         run: |
-          
+          BRANCH=${GITHUB_REF#refs/heads/}
           if [ "${{github.event_name}} == "push"]; then
-            BRANCH=${GITHUB_REF#refs/heads/};
+            
             if [ "${BRANCH}" == "dev"]; then
             echo "ENVIRONMENT=dev" >> $GITHUB_ENV
           elif [ "${{github.event_name}} == "pull_request" ]; then
